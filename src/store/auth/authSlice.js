@@ -66,10 +66,18 @@ export const authSlise = createSlice({
         state.isAuthorization = true;
         state.token = action.payload.token;
 
-      })
+        state.user={
+          name: action.payload.user.name,
+          email: action.payload.user.email,
+          role: action.payload.user.role,
+        };
+   })
       .addCase(signUpRequest.pending, (state) => {
         state.isAuthorization = false;
-      });
+      })
+      // .addCase(logout.fulfilled),()=>{
+      //   return {...initialState}
+      // }
   },
 });
 

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { deleteAdminRequest, postAdminMealsRequest } from "../../api/mealsService";
+import { deleteAdminRequest, editAdminRequest, postAdminMealsRequest } from "../../api/mealsService";
 import { getFoods } from "../meals/mealsThunk";
 
 export const postAdminMeals = createAsyncThunk(
@@ -17,10 +17,21 @@ async(payload,{dispatch, rejectWithValie})=>{
 
 export const deleteAdminMeals = createAsyncThunk(
     'admin/deleteAdminMeals',
-    async(payload,{rejectWithValue,getState,dispatch})=>{
+    async(payload,{rejectWithValue,dispatch})=>{
         try{
-            const {token}= getState().auth
-            const {data} = await deleteAdminRequest (token,payload)
+            const {data} = await deleteAdminRequest (payload)
+            dispatch(getFoods())
+            return data.data
+        } catch (error){
+            return rejectWithValue(error)
+        }
+    }
+)
+export const editAdminMeals = createAsyncThunk(
+    'admin/editAdminMeals',
+    async(payload,{rejectWithValue,dispatch})=>{
+        try{
+            const {data} = await editAdminRequest (payload)
             dispatch(getFoods())
             return data.data
         } catch (error){

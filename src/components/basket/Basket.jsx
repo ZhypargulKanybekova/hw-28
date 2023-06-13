@@ -1,26 +1,26 @@
-import React, { useEffect } from 'react'
-import { Modall } from '../UI/modal/Modal'
-import styled from 'styled-components'
-import { BasketItem } from './BasketItem'
-import { TotalAmount } from './TotalAmount'
-import { useDispatch, useSelector } from 'react-redux'
-import { getBasket } from '../../store/basket/basketThunk'
+import React, { useEffect } from "react";
+import { Modall } from "../UI/modal/Modal";
+import styled from "styled-components";
+import { BasketItem } from "./BasketItem";
+import { TotalAmount } from "./TotalAmount";
+import { useDispatch, useSelector } from "react-redux";
+import { getBasket } from "../../store/basket/basketThunk";
 
-export const Basket = ({ toggleHandler }) => {
-  const { items } = useSelector((state) => state.basket)
-  const dispatch = useDispatch()
+export const Basket = ({ toggleHandler, toggle }) => {
+  const { items } = useSelector((state) => state.basket);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBasket())
-  }, [dispatch])
+    dispatch(getBasket());
+  }, [dispatch]);
 
   const totalPrice = items?.reduce(
     (prev, current) => prev + +current.price.toFixed(2) * current.amount,
     0
-  )
+  );
 
   return (
-    <Modall onClick={toggleHandler}>
+    <Modall onClick={toggleHandler} open={toggle}>
       <Content>
         {items?.length ? (
           <FixedWidthContainer>
@@ -35,23 +35,23 @@ export const Basket = ({ toggleHandler }) => {
                     amount={item.amount}
                   />
                 )
-              )
+              );
             })}
           </FixedWidthContainer>
         ) : null}
         <TotalAmount toggleHandler={toggleHandler} totalPrice={totalPrice} />
       </Content>
     </Modall>
-  )
-}
+  );
+};
 
 const Content = styled.div`
   width: 100%;
   height: 100%;
   padding: 1.5rem 1rem;
-`
+`;
 
 const FixedWidthContainer = styled.div`
   overflow-y: auto;
   max-height: 260px;
-`
+`;

@@ -1,20 +1,15 @@
 
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch} from 'react-redux';
 import styled from 'styled-components';
 import { authActions } from '../../store/auth/authSlice';
 import { Button } from '../../components/UI/button/Button';
 
 export const HeaderAdminMeals = () => {
    
-  const  isAuthorization  = useSelector((state) => state.auth.isAuthorization);
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
 
-  const navigateToSignIn = () => {
-    navigate("signin");
-  };
+  const dispatch = useDispatch();
+ 
   const logoutHandler = () => {
     dispatch(authActions.logout());
   };
@@ -22,7 +17,7 @@ export const HeaderAdminMeals = () => {
     <HeaderStyle>
       <Container>
         <MealsText>React Meals</MealsText>
-      {isAuthorization ? (
+      
           <Button
             onClick={logoutHandler}
             style={{
@@ -33,19 +28,7 @@ export const HeaderAdminMeals = () => {
           >
             LogOut
           </Button>
-        ) : (
-          <Button
-            onClick={navigateToSignIn}
-            style={{
-              width: "150px",
-              height: "50px",
-              backgroundColor: "#5e1c03",
-              borderRadius: "15px",
-            }}
-          >
-            LogIn
-          </Button>
-        )}
+         
       </Container>
     </HeaderStyle>
   );
